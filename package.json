@@ -1,0 +1,11 @@
+{
+    "name": "com.hilariousheiner.quadui",
+    "displayName": "PlanetedUnity",
+    "version": "0.1.0",
+    "unity": "6000.5",
+    "description": "unity version of planeted",
+    "author": 
+	{
+        "name": "Heiner Schmidt"
+    }
+}
