@@ -28,7 +28,36 @@ namespace Planeted
 
             return h;
         }
-       
+
+        // coordinate hash functions:
+        public static uint Hash1D(int x, uint seed)
+        {
+            uint h = seed;
+
+            h ^= (uint)x * 0x9e3779b1;
+
+            return PRNG.FMix32(h);
+        }
+        public static uint Hash2D(int x, int y, uint seed)
+        {
+            uint h = seed;
+
+            h ^= (uint)x * 0x9e3779b1;
+            h ^= (uint)y * 0x85ebca77;
+
+            return PRNG.FMix32(h);
+        }
+        public static uint Hash3D(int x, int y, int z, uint seed)
+        {
+            uint h = seed;
+
+            h ^= (uint)x * 0x9e3779b1;
+            h ^= (uint)y * 0x85ebca77;
+            h ^= (uint)z * 0xc2b2ae3d;
+
+            return PRNG.FMix32(h);
+        }
+
         // FNV-1a hash functions:
         // https://en.wikipedia.org/wiki/Fowler-Noll-Vo_hash_function
         public static uint FNV32(string s)
