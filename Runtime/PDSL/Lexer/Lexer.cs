@@ -138,23 +138,22 @@ namespace Planeted
 
         private Token readIdentifier()
         {
-            string text = string.Empty;
+            string lexeme = string.Empty;
 
             while(char.IsLetterOrDigit(this.peek()) || this.peek() == '_')
             {
-                text += this.advance();
+                lexeme += this.advance();
             }
 
-            if(keywordDict.ContainsKey(text))
+            if(keywordDict.ContainsKey(lexeme))
             {
-                return new Token(keywordDict[text], text);
+                return new Token(keywordDict[lexeme], lexeme);
             }
-
-            return new Token(TokenTypeEnum.Identifier, text);
+            return new Token(TokenTypeEnum.Identifier, lexeme);
         }
         private Token readNumber()
         {
-            string text = string.Empty;
+            string lexeme = string.Empty;
             bool isFloat = false;
 
             while (char.IsDigit(this.peek()) || this.peek() == '.')
@@ -167,14 +166,14 @@ namespace Planeted
                     }
                     isFloat = true;
                 }
-                text += this.advance();
+                lexeme += this.advance();
             }
 
             if (isFloat)
             {
-                return new Token(TokenTypeEnum.FloatLiteral, text);
+                return new Token(TokenTypeEnum.FloatLiteral, lexeme);
             }
-            return new Token(TokenTypeEnum.IntLiteral, text);
+            return new Token(TokenTypeEnum.IntLiteral, lexeme);
         }
         private Token readString()
         {
