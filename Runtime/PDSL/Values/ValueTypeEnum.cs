@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Planeted
 {
     public enum ValueTypeEnum
