@@ -13,7 +13,7 @@ namespace Planeted
 
         public void Run(PDSLRuntime runtime)
         {
-            foreach (var statement in statementList)
+            foreach (AStatement statement in statementList)
             {
                 statement.Execute(runtime);
             }
