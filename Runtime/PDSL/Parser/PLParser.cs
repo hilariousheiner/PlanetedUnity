@@ -41,7 +41,7 @@ namespace Planeted
         {
             if (this.currentToken.TokenType != tokenType)
             {
-                //throw std::runtime_error("Unexpected token: " + TokenTypeToString(this->current.type) + " (expected " + TokenTypeToString(tokenType) + ")");
+                throw new PLParserException("Unexpected Token: " + Token.TokenTypeToString(this.currentToken.TokenType) + " (expected " + Token.TokenTypeToString(tokenType) + ")", 0);
             }
 
             Token result = this.currentToken;
