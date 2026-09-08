@@ -50,6 +50,16 @@ namespace Planeted
             return new AssignmentStatement(name, expression);
         }
 
+        private ExpressionStatement parseExpressionStatement()
+        {
+            AExpression expression = this.parseExpression();
+
+            // ;
+            this.expect(TokenTypeEnum.Semicolon);
+
+            return new ExpressionStatement(expression);
+        }
+
         private AExpression parseExpression()
         {
             return null;
