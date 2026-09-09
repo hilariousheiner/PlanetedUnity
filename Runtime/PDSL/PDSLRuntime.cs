@@ -1,11 +1,12 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Planeted
 {
     public class PDSLRuntime
     {
-        private Dictionary<string, PDSLValue> environment; 
+        private Dictionary<string, PDSLValue> environment;
+
+        public PDSLValue Result;
 
         public PDSLRuntime() 
         {
