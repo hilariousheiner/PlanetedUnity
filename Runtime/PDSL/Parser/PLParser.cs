@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using UnityEditor.Experimental;
 
 namespace Planeted
 {
@@ -32,7 +31,19 @@ namespace Planeted
         {
             return null;
         }
+        private ReturnStatement parseReturnStatement()
+        {
+            // return
+            this.expect(TokenTypeEnum.Return);
 
+            // expression
+            AExpression expression = this.parseExpression();
+
+            // ;
+            this.expect(TokenTypeEnum.Semicolon);
+
+            return new ReturnStatement(expression);
+        }
         private AssignmentStatement parseAssignmentStatement()
         {
             // identifier
