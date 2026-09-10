@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace Planeted
 {
@@ -31,6 +30,16 @@ namespace Planeted
         {
             return null;
         }
+
+        private ImportStatement parseImportStatement()
+        {
+            this.expect(TokenTypeEnum.Import);
+
+            string path = this.expect(TokenTypeEnum.StringLiteral).Lexeme;
+
+            return new ImportStatement(path);
+        }
+
         private ReturnStatement parseReturnStatement()
         {
             // return
