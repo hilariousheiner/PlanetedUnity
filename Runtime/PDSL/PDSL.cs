@@ -4,6 +4,12 @@ namespace Planeted
 {
     public class PDSL
     {
+        public static void RunFile(string path, PDSLRuntime runtime)
+        {
+
+
+        }
+
         public static void Run(string code, PDSLRuntime runtime)
         {
             Lexer lexer = new Lexer(code);
