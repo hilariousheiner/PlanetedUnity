@@ -28,7 +28,32 @@ namespace Planeted
 
         private AStatement parseStatement()
         {
-            return null;
+            AStatement result;
+
+            if (this.currentToken.TokenType == TokenTypeEnum.Return)
+            {
+                result = this.parseReturnStatement();
+                //ToDo: stop parsing. If not eof => unreachable code detected.
+            }
+            else
+            {
+                if (this.currentToken.TokenType == TokenTypeEnum.Import)
+                {
+                    result = this.parseImportStatement();
+                }
+                else
+                {
+                    if (this.nextToken.TokenType == TokenTypeEnum.Equals)
+                    {
+                        result = this.parseAssignmentStatement();
+                    }
+                    else
+                    {
+                        result = this.parseExpressionStatement();
+                    }
+                }
+            }
+            return result;
         }
 
         private ImportStatement parseImportStatement()
