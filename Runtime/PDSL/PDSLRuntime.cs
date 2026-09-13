@@ -8,8 +8,11 @@ namespace Planeted
 
         public PDSLValue Result;
 
-        public PDSLRuntime() 
+        public ISourceFileReader SourceFileReader;
+
+        public PDSLRuntime(ISourceFileReader sourceFileReader) 
         {
+            this.SourceFileReader = sourceFileReader;
             this.environment = new Dictionary<string, PDSLValue>();
         }
 
