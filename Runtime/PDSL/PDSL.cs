@@ -6,8 +6,10 @@ namespace Planeted
     {
         public static void RunFile(string path, PDSLRuntime runtime)
         {
-
-
+            if (runtime.SourceFileReader.TryReadSourceFile(path, out string code))
+            {
+                Debug.Log(code);
+            }
         }
 
         public static void Run(string code, PDSLRuntime runtime)
