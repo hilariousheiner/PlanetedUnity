@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 
 namespace Planeted
 {
@@ -108,6 +109,36 @@ namespace Planeted
         private AExpression parseExpression()
         {
             return null;
+        }
+
+        private ConstantExpression parseLiteral()
+        {
+            PDSLValue result = PDSLValue.Null;
+
+            switch (this.currentToken.TokenType)
+            {
+                case TokenTypeEnum.IntLiteral:
+                    result = PDSLValue.Integer(int.Parse(this.currentToken.Lexeme));
+                    break;
+                case TokenTypeEnum.FloatLiteral:
+                    //result = PDSLValue(std::stof(this.currentToken.Lexeme));
+                    break;
+                case TokenTypeEnum.BoolLiteral:
+                    //result = PDSLValue(this.currentToken.Lexeme == "true");
+                    break;
+                case TokenTypeEnum.StringLiteral:
+                    //result = PDSLValue(this.currentToken.Lexeme);
+                    break;
+                case TokenTypeEnum.NullLiteral:
+                    result = PDSLValue.Null;
+                    break;
+                default:
+                    //throw std::runtime_error("Invalid value type: " + TokenTypeToString(this.currentToken.TokenType));
+                    break;
+            }
+
+            this.advance();
+            return new ConstantExpression(result);
         }
 
         private void advance()
