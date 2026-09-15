@@ -27,5 +27,14 @@ namespace Planeted
                 this.environment[name] = value;
             }
         }
+
+        public PDSLValue GetVariableValue(string name)
+        {
+            if(!this.environment.ContainsKey(name))
+            {
+                throw new PLRuntimeException("Undefined variable: " + name, 0);
+            }
+            return this.environment[name];
+        }
     }
 }
