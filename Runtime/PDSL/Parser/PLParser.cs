@@ -134,7 +134,6 @@ namespace Planeted
                     break;
                 default:
                     throw new PLParserException("Invalid value type: " + Token.TokenTypeToString(this.currentToken.TokenType), 0);
-                    break;
             }
 
             this.advance();
