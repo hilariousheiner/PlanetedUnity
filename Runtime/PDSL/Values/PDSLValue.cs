@@ -17,5 +17,20 @@ namespace Planeted
         {
             return new PDSLValue(ValueTypeEnum.Int, intValue);
         }
+
+        public static PDSLValue Float(float floatValue)
+        {
+            return new PDSLValue(ValueTypeEnum.Float, floatValue);
+        }
+
+        public static PDSLValue Bool(bool boolValue)
+        {
+            return new PDSLValue(ValueTypeEnum.Bool, boolValue);
+        }
+
+        public static PDSLValue String(string stringValue)
+        {
+            return new PDSLValue(ValueTypeEnum.String, stringValue);
+        }
     }
 }

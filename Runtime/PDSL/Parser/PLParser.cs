@@ -121,19 +121,19 @@ namespace Planeted
                     result = PDSLValue.Integer(int.Parse(this.currentToken.Lexeme));
                     break;
                 case TokenTypeEnum.FloatLiteral:
-                    //result = PDSLValue(std::stof(this.currentToken.Lexeme));
+                    result = PDSLValue.Float(float.Parse(this.currentToken.Lexeme));
                     break;
                 case TokenTypeEnum.BoolLiteral:
-                    //result = PDSLValue(this.currentToken.Lexeme == "true");
+                    result = PDSLValue.Bool(this.currentToken.Lexeme == "true");
                     break;
                 case TokenTypeEnum.StringLiteral:
-                    //result = PDSLValue(this.currentToken.Lexeme);
+                    result = PDSLValue.String(this.currentToken.Lexeme);
                     break;
                 case TokenTypeEnum.NullLiteral:
                     result = PDSLValue.Null;
                     break;
                 default:
-                    //throw std::runtime_error("Invalid value type: " + TokenTypeToString(this.currentToken.TokenType));
+                    throw new PLParserException("Invalid value type: " + Token.TokenTypeToString(this.currentToken.TokenType), 0);
                     break;
             }
 
