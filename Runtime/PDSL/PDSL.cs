@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Planeted
 {
-    public class PDSL
+    public static class PDSL
     {
         public static void RunFile(string path, PDSLRuntime runtime)
         {
