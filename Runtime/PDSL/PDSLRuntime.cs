@@ -36,5 +36,10 @@ namespace Planeted
             }
             return this.environment[name];
         }
+
+        public PDSLValue CallFunction(string name, List<PDSLValue> args)
+        {
+            return PDSLValue.Null;
+        }
     }
 }
