@@ -1,9 +1,13 @@
 using UnityEngine;
 
+using System.Collections.Generic;
+
 namespace Planeted
 {
     public static class PDSL
     {
+        public delegate PDSLValue BuiltinFunctionDelegate(PDSLRuntime runtime, List<PDSLValue> args);
+
         public static void RunFile(string path, PDSLRuntime runtime)
         {
             if (runtime.SourceFileReader.TryReadSourceFile(path, out string code))

@@ -5,6 +5,7 @@ namespace Planeted
     public class PDSLRuntime
     {
         private Dictionary<string, PDSLValue> environment;
+        private Dictionary<string, PDSL.BuiltinFunctionDelegate> builtinFunctions;
 
         public PDSLValue Result;
 
@@ -14,6 +15,7 @@ namespace Planeted
         {
             this.SourceFileReader = sourceFileReader;
             this.environment = new Dictionary<string, PDSLValue>();
+            this.builtinFunctions = new Dictionary<string, PDSL.BuiltinFunctionDelegate>();
         }
 
         public void SetVariableValue(string name, PDSLValue value)
@@ -37,9 +39,25 @@ namespace Planeted
             return this.environment[name];
         }
 
+        public void InstallBuiltinFunction(string name, PDSL.BuiltinFunctionDelegate function)
+        {
+            if (this.builtinFunctions.ContainsKey(name))
+            {
+                this.builtinFunctions[name] = function;
+            }
+            else
+            {
+                this.builtinFunctions.Add(name, function);
+            }
+        }
+
         public PDSLValue CallFunction(string name, List<PDSLValue> args)
         {
-            return PDSLValue.Null;
+            if (!this.builtinFunctions.ContainsKey(name))
+            {
+                throw new PLRuntimeException("Undefined function: " + name, 0);
+            }
+            return this.builtinFunctions[name](this, args);
         }
     }
 }
