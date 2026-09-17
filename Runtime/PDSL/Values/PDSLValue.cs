@@ -32,5 +32,10 @@ namespace Planeted
         {
             return new PDSLValue(ValueTypeEnum.String, stringValue);
         }
+
+        public static PDSLValue Tuple(PLTuple tupleValue)
+        {
+            return new PDSLValue(ValueTypeEnum.Tuple, tupleValue);
+        }
     }
 }
