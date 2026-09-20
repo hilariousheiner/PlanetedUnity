@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace Planeted
 {
@@ -137,6 +138,36 @@ namespace Planeted
 
             this.advance();
             return new ConstantExpression(result);
+        }
+
+        private CallExpression parseCallExpression()
+        {
+            // identifier
+            string name = this.expect(TokenTypeEnum.Identifier).Lexeme;
+
+            // parse argument list:
+            // (
+            this.expect(TokenTypeEnum.LParen);
+
+            List<AExpression> args = new List<AExpression>();
+
+            if (this.currentToken.TokenType != TokenTypeEnum.RParen)
+            {
+                while (true)
+                {
+                    args.Add(this.parseExpression());
+                    if (this.currentToken.TokenType == TokenTypeEnum.Comma)
+                    {
+                        this.advance();
+                        continue;
+                    }
+                    break;
+                }
+            }
+            // )
+
+            this.expect(TokenTypeEnum.RParen);
+            return new CallExpression(name, args);
         }
 
         private void advance()
