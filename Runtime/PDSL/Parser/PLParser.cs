@@ -170,6 +170,33 @@ namespace Planeted
             return new CallExpression(name, args);
         }
 
+
+        private TupleExpression parseTupleExpression()
+        {
+            // (
+            this.expect(TokenTypeEnum.LParen);
+
+            List<AExpression> args = new List<AExpression>();
+
+            if (this.currentToken.TokenType != TokenTypeEnum.RParen)
+            {
+                while (true)
+                {
+                    args.Add(this.parseExpression());
+                    if (this.currentToken.TokenType == TokenTypeEnum.Comma)
+                    {
+                        this.advance();
+                        continue;
+                    }
+                    break;
+                }
+            }
+            // )
+
+            this.expect(TokenTypeEnum.RParen);
+            return new TupleExpression(args);
+        }
+
         private void advance()
         {
             this.currentToken = this.nextToken;
