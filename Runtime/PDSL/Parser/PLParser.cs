@@ -108,7 +108,41 @@ namespace Planeted
 
         private AExpression parseExpression()
         {
-            return null;
+            return this.parseUnaryExpression();
+        }
+
+        private AExpression parseUnaryExpression()
+        {
+            if (this.currentToken.TokenType == TokenTypeEnum.Minus)
+            {
+                this.advance();
+
+                AExpression operand = this.parseUnaryExpression();
+                return new UnaryExpression(TokenTypeEnum.Minus, operand);
+            }
+            return this.parsePrimaryExpression();
+        }
+        private AExpression parsePrimaryExpression()
+        {
+            if (this.currentToken.TokenType == TokenTypeEnum.Identifier)
+            {
+                if (this.nextToken.TokenType == TokenTypeEnum.LParen)
+                {
+                    return this.parseCallExpression();
+                }
+                string identifier = this.currentToken.Lexeme;
+                this.advance();
+                return new VariableExpression(identifier);
+            }
+            if (this.currentToken.TokenType == TokenTypeEnum.LParen)
+            {
+                return this.parseTupleExpression();
+            }
+            if (this.currentToken.TokenType == TokenTypeEnum.LBrack)
+            {
+                return this.parseListExpression();
+            }
+            return this.parseLiteral();
         }
 
         private ConstantExpression parseLiteral()
