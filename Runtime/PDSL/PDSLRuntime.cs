@@ -8,14 +8,20 @@ namespace Planeted
         private Dictionary<string, PDSL.BuiltinFunctionDelegate> builtinFunctions;
 
         public PDSLValue Result;
+        public bool DebugFlag; 
 
         public ISourceFileReader SourceFileReader;
 
         public PDSLRuntime(ISourceFileReader sourceFileReader) 
         {
-            this.SourceFileReader = sourceFileReader;
             this.environment = new Dictionary<string, PDSLValue>();
             this.builtinFunctions = new Dictionary<string, PDSL.BuiltinFunctionDelegate>();
+            
+            this.DebugFlag = false;
+
+            this.SourceFileReader = sourceFileReader;
+
+            this.InstallBuiltinFunction("setDebugFlag", PDSLRuntime.builtin_setDebugFlag);
         }
 
         public void SetVariableValue(string name, PDSLValue value)
@@ -58,6 +64,16 @@ namespace Planeted
                 throw new PLRuntimeException("Undefined function: " + name, 0);
             }
             return this.builtinFunctions[name](this, args);
+        }
+
+        private static PDSLValue builtin_setDebugFlag(PDSLRuntime runtime, List<PDSLValue> args)
+        {
+            if(args.Count != 1)
+            {
+                throw new PLRuntimeException("setDebugFlag expects one argument.", 0);
+            }
+            runtime.DebugFlag = (bool)args[0].Data;
+            return PDSLValue.Null;
         }
     }
 }
