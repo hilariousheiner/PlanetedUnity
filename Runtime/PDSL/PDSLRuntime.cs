@@ -1,5 +1,3 @@
-using UnityEngine;
-
 using System.Collections.Generic;
 
 namespace Planeted
@@ -13,8 +11,9 @@ namespace Planeted
         public bool DebugFlag; 
 
         public ISourceFileReader SourceFileReader;
+        public ILogger Logger;
 
-        public PDSLRuntime(ISourceFileReader sourceFileReader) 
+        public PDSLRuntime(ISourceFileReader sourceFileReader, ILogger logger) 
         {
             this.environment = new Dictionary<string, PDSLValue>();
             this.builtinFunctions = new Dictionary<string, PDSL.BuiltinFunctionDelegate>();
@@ -22,6 +21,7 @@ namespace Planeted
             this.DebugFlag = false;
 
             this.SourceFileReader = sourceFileReader;
+            this.Logger = logger;
 
             this.InstallBuiltinFunction("setDebugFlag", PDSLRuntime.builtin_setDebugFlag);
             this.InstallBuiltinFunction("log", PDSLRuntime.builtin_log);
@@ -85,7 +85,7 @@ namespace Planeted
             {
                 throw new PLRuntimeException("log expects exactly one argument.", 0);
             }
-            Debug.Log((string)args[0].Data);
+            runtime.Logger.Log(LogLevelEnum.Message, (string)args[0].Data);
             return PDSLValue.Null;
         }
     }
