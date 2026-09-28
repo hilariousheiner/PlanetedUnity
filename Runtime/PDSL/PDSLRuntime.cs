@@ -81,10 +81,13 @@ namespace Planeted
             
         private static PDSLValue builtin_log(PDSLRuntime runtime, List<PDSLValue> args)
         {
+            /*
             if(args.Count != 1)
             {
                 throw new PLRuntimeException("log expects exactly one argument.", 0);
             }
+            */
+            PDSLUtils.ExpectArgsCount(args, 1, "log");
             runtime.Logger.Log(LogLevelEnum.Message, (string)args[0].Data);
             return PDSLValue.Null;
         }
