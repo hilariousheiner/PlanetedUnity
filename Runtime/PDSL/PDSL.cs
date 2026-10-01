@@ -1,6 +1,6 @@
-using System.Collections.Generic;
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
+
+using System.Collections.Generic;
 
 namespace Planeted
 {
@@ -23,6 +23,19 @@ namespace Planeted
             PLParser parser = new PLParser(lexer);
             PDSLProgram program = parser.Parse();
             program.Run(runtime);
+        }
+
+        public static PDSLValue Load(string path, PDSLRuntime runtime)
+        {
+            PDSLRuntime new_runtime = new PDSLRuntime(runtime.SourceFileReader, runtime.Logger);
+
+            PDSLLib.Load(new_runtime);
+
+            new_runtime.OutPath = runtime.OutPath;
+
+            PDSL.RunFile(runtime.ResolvePath(path), new_runtime);
+
+            return new_runtime.Result;
         }
     }
 }
