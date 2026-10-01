@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO; 
 
 namespace Planeted
 {
@@ -13,6 +14,9 @@ namespace Planeted
         public ISourceFileReader SourceFileReader;
         public ILogger Logger;
 
+        public string OutPath;
+        public Stack<string> FileStack; 
+
         public PDSLRuntime(ISourceFileReader sourceFileReader, ILogger logger) 
         {
             this.environment = new Dictionary<string, PDSLValue>();
@@ -22,6 +26,9 @@ namespace Planeted
 
             this.SourceFileReader = sourceFileReader;
             this.Logger = logger;
+
+            this.OutPath = "./";
+            this.FileStack = new Stack<string>();
 
             this.InstallBuiltinFunction("setDebugFlag", PDSLRuntime.builtin_setDebugFlag);
             this.InstallBuiltinFunction("log", PDSLRuntime.builtin_log);
@@ -67,6 +74,27 @@ namespace Planeted
                 throw new PLRuntimeException("Undefined function: " + name, 0);
             }
             return this.builtinFunctions[name](this, args);
+        }
+
+        public string ResolvePath(string filename)
+        {
+            string current = string.Empty;
+
+            if (this.FileStack.Count > 0)
+            {
+                current = FileStack.Pop();
+            }
+
+            // If no current file, treat as working directory case
+            if (current == string.Empty)
+            {
+                return filename;
+            }
+     
+            // strip file name keep directory
+            string dir = new FileInfo(current).Directory.FullName;
+
+            return Path.GetFullPath(dir + filename);
         }
 
         private static PDSLValue builtin_setDebugFlag(PDSLRuntime runtime, List<PDSLValue> args)
