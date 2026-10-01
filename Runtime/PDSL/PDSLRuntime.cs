@@ -9,19 +9,19 @@ namespace Planeted
         private Dictionary<string, PDSL.BuiltinFunctionDelegate> builtinFunctions;
 
         public PDSLValue Result;
-        public bool DebugFlag; 
+        public bool DebugFlag;
 
         public ISourceFileReader SourceFileReader;
         public ILogger Logger;
 
         public string OutPath;
-        public Stack<string> FileStack; 
+        public Stack<string> FileStack;
 
-        public PDSLRuntime(ISourceFileReader sourceFileReader, ILogger logger) 
+        public PDSLRuntime(ISourceFileReader sourceFileReader, ILogger logger)
         {
             this.environment = new Dictionary<string, PDSLValue>();
             this.builtinFunctions = new Dictionary<string, PDSL.BuiltinFunctionDelegate>();
-            
+
             this.DebugFlag = false;
 
             this.SourceFileReader = sourceFileReader;
@@ -32,6 +32,7 @@ namespace Planeted
 
             this.InstallBuiltinFunction("setDebugFlag", PDSLRuntime.builtin_setDebugFlag);
             this.InstallBuiltinFunction("log", PDSLRuntime.builtin_log);
+            this.InstallBuiltinFunction("load", PDSLRuntime.builtin_load);
         }
 
         public void SetVariableValue(string name, PDSLValue value)
@@ -48,7 +49,7 @@ namespace Planeted
 
         public PDSLValue GetVariableValue(string name)
         {
-            if(!this.environment.ContainsKey(name))
+            if (!this.environment.ContainsKey(name))
             {
                 throw new PLRuntimeException("Undefined variable: " + name, 0);
             }
@@ -90,7 +91,7 @@ namespace Planeted
             {
                 return filename;
             }
-     
+
             // strip file name keep directory
             string dir = new FileInfo(current).Directory.FullName;
 
@@ -99,14 +100,14 @@ namespace Planeted
 
         private static PDSLValue builtin_setDebugFlag(PDSLRuntime runtime, List<PDSLValue> args)
         {
-            if(args.Count != 1)
+            if (args.Count != 1)
             {
                 throw new PLRuntimeException("setDebugFlag expects one argument.", 0);
             }
             runtime.DebugFlag = (bool)args[0].Data;
             return PDSLValue.Null;
         }
-            
+
         private static PDSLValue builtin_log(PDSLRuntime runtime, List<PDSLValue> args)
         {
             /*
@@ -118,6 +119,15 @@ namespace Planeted
             PDSLUtils.ExpectArgsCount(args, 1, "log");
             runtime.Logger.Log(LogLevelEnum.Message, (string)args[0].Data);
             return PDSLValue.Null;
+        }
+
+        private static PDSLValue builtin_load(PDSLRuntime runtime, List<PDSLValue> args)
+        {
+            if (args.Count != 1)
+            {
+                throw new PLRuntimeException("load expects exactly one argument.", 0);
+            }
+            return PDSL.Load(args[0].ToString(), runtime);
         }
     }
 }
