@@ -93,7 +93,7 @@ namespace Planeted
 
             if (this.FileStack.Count > 0)
             {
-                current = FileStack.Pop();
+                current = FileStack.Peek();
             }
 
             // If no current file, treat as working directory case
