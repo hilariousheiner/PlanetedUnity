@@ -8,14 +8,19 @@ namespace Planeted
 
         public static void RunFile(string path, PDSLRuntime runtime)
         {
-            if (runtime.SourceFileReader.TryReadSourceFile(path, out string code))
+            string resolved = runtime.ResolvePath(path);
+
+            if (runtime.SourceFileReader.TryReadSourceFile(resolved, out string code))
             {
+
+                runtime.FileStack.Push(path);
                 PDSL.Run(code, runtime);
 
                 if (runtime.DebugFlag)
                 {
                     runtime.DumpEnvironment();
                 }
+                runtime .FileStack.Pop();
             }
         }
 
