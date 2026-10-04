@@ -35,11 +35,8 @@ namespace Planeted
 #if UNITY_EDITOR
 
             string packagePath = Path.Combine(this.getPackageRoot(), "StandardLibrary", path);
-            Debug.Log(packagePath);
             if (File.Exists(packagePath))
             {
-                Debug.Log("Got here!");
-
                 return packagePath;
             }
 #endif

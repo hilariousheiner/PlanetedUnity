@@ -12,7 +12,6 @@ namespace Planeted
         {
             if (runtime.SourceFileReader.TryReadSourceFile(path, out string code))
             {
-                Debug.Log(code);
                 PDSL.Run(code, runtime);
             }
         }
