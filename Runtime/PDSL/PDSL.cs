@@ -1,5 +1,3 @@
-using UnityEngine;
-
 using System.Collections.Generic;
 
 namespace Planeted
@@ -13,6 +11,11 @@ namespace Planeted
             if (runtime.SourceFileReader.TryReadSourceFile(path, out string code))
             {
                 PDSL.Run(code, runtime);
+
+                if (runtime.DebugFlag)
+                {
+                    runtime.DumpEnvironment();
+                }
             }
         }
 
