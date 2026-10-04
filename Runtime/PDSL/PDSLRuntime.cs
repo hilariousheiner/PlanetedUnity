@@ -77,6 +77,15 @@ namespace Planeted
             return this.builtinFunctions[name](this, args);
         }
 
+        public void DumpEnvironment()
+        {
+            this.Logger.Log(LogLevelEnum.Message, "environment: \n");
+            foreach(KeyValuePair<string, PDSLValue> entry in this.environment)
+            {
+                this.Logger.Log(LogLevelEnum.Message, entry.Key + "\n");
+            }
+        }
+
         public string ResolvePath(string filename)
         {
             string current = string.Empty;
