@@ -110,10 +110,13 @@ namespace Planeted
 
         private static PDSLValue builtin_setDebugFlag(PDSLRuntime runtime, List<PDSLValue> args)
         {
+            /*
             if (args.Count != 1)
             {
                 throw new PLRuntimeException("setDebugFlag expects one argument.", 0);
             }
+            */
+            PDSLUtils.ExpectArgsCount(args, 1, "setDebugFlag");
             runtime.DebugFlag = (bool)args[0].Data;
             return PDSLValue.Null;
         }
@@ -133,10 +136,13 @@ namespace Planeted
 
         private static PDSLValue builtin_load(PDSLRuntime runtime, List<PDSLValue> args)
         {
+            /*
             if (args.Count != 1)
             {
                 throw new PLRuntimeException("load expects exactly one argument.", 0);
             }
+            */
+            PDSLUtils.ExpectArgsCount(args, 1, "load");
             return PDSL.Load(args[0].ToString(), runtime);
         }
     }
