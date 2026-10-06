@@ -42,5 +42,10 @@ namespace Planeted
         {
             return new PDSLValue(ValueTypeEnum.List, listValue);
         }
+
+        public static PDSLValue Noise(Noise noise)
+        {
+            return new PDSLValue(ValueTypeEnum.Noise, noise);
+        }
     }
 }
