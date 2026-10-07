@@ -101,6 +101,12 @@ namespace Planeted
         }
 
         // Utils
+        public static float HashToSigned(uint h)
+        {
+            float u = (float)h * (1.0f / 4294967296.0f);
+            return u * 2.0f - 1.0f;
+        }
+
         public static ulong RandomSeed()
         {
             byte[] bytes = new byte[8];
