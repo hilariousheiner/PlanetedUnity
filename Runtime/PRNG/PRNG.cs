@@ -114,6 +114,10 @@ namespace Planeted
 
             return BitConverter.ToUInt64(bytes, 0);
         }
+        public static uint StringToSeed32(string s)
+        {
+            return PRNG.FMix32(PRNG.FNV32(s));
+        }
         public static ulong StringToSeed64(string s)
         {
             return PRNG.FMix64(PRNG.FNV64(s));
