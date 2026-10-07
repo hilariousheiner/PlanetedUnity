@@ -11,6 +11,26 @@ namespace Planeted
             this.Data = data;
         }
 
+        public int GetIntValue()
+        {
+            return (int)this.Data;
+        }
+
+        public float GetFloatValue()
+        {
+            return (float)this.Data;
+        }
+        
+        public string GetStringValue()
+        {
+            return (string)this.Data;
+        }
+
+        public Noise GetNoiseValue()
+        {
+            return (Noise)this.Data;
+        }
+
         public static PDSLValue Null = new PDSLValue(ValueTypeEnum.Null, null);
 
         public static PDSLValue Integer(int intValue)
