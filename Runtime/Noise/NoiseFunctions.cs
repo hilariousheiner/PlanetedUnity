@@ -38,5 +38,16 @@ namespace Planeted
                 return Mathf.Abs(noiseFun(p, parameters));
             };
         }
+
+        public static NoiseFunction1D Ridge1D(NoiseFunctions.NoiseFunction1D noiseFun)
+        {
+            return (float p, NoiseParameters parameters) =>
+            {
+                float n = (0.9f - Mathf.Abs(noiseFun(p, parameters)));
+                return n * n;
+            };
+        }
+
+
     }
 }
