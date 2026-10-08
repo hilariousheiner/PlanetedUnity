@@ -30,5 +30,13 @@ namespace Planeted
             }
             return Mathf.Pow(result, fbmParams.Exponent);
         }
+
+        public static NoiseFunction1D Billow1D(NoiseFunctions.NoiseFunction1D noiseFun)
+        {
+            return (float p, NoiseParameters parameters) =>
+            {
+                return Mathf.Abs(noiseFun(p, parameters));
+            };
+        }
     }
 }
