@@ -5,7 +5,8 @@ namespace Planeted
     public static class NoiseFunctions
     {
         public delegate float NoiseFunction1D(float p, NoiseParameters parameters);
-
+        public delegate NoiseFunction1D NoiseTransform1D(NoiseFunction1D noiseFunction);
+        
         public static float FBM1D(float p, FBMParameters fbmParams, NoiseParameters noiseParams, NoiseFunctions.NoiseFunction1D noiseFun)
         {
             float result = 0.0f;
@@ -47,7 +48,25 @@ namespace Planeted
                 return n * n;
             };
         }
+        public static NoiseTransform1D GetNoiseStyleTransform1D(NoiseStyleEnum noiseStyle)
+        {
+            NoiseTransform1D result = null;
 
-
+            switch (noiseStyle)
+            {
+                case NoiseStyleEnum.Plain:
+                    result = (NoiseFunctions.NoiseFunction1D noiseFun) => { return noiseFun; };  
+                    break;
+                case NoiseStyleEnum.Billow:
+                    result = NoiseFunctions.Billow1D;
+                    break;
+                case NoiseStyleEnum.Ridge:
+                    result = NoiseFunctions.Ridge1D;
+                    break;
+                default:
+                    break;
+            }
+            return result;
+        }
     }
 }
